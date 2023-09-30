@@ -84,7 +84,7 @@ void Game::HandleEvents()
 			bisrunning = false;
 			
 		}
-		player.HandleEvents();
+		player.HandleEvents(event);
 
 	}
 

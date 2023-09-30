@@ -14,7 +14,7 @@ public:
 	void Set(int x, int y, int height, int width, int scale);
 	void SetScale(int scale);
 
-	void HandleEvents();
+	void HandleEvents(SDL_Event& player_events);
 	void Update();
 	void Render();
 

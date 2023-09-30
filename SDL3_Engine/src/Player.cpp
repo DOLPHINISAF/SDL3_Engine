@@ -61,8 +61,29 @@ void Player::SetScale(int scale) {
 
 }
 
-void Player::HandleEvents()
+void Player::HandleEvents(SDL_Event& player_events)
 {
+
+	b2Vec2 force;
+
+	force.Set(0.f, 300000.f);
+
+	//basic movement
+
+	switch (player_events.key.keysym.sym) {
+	case SDLK_UP: // jump
+		player_body->ApplyLinearImpulseToCenter(force, true);
+		//std::cout << "applied force" << '\n';
+		break;
+	case SDLK_LEFT:
+		player_body->ApplyLinearImpulseToCenter(b2Vec2(-100.f, 0.f), true);
+		break;
+	case SDLK_RIGHT:
+		player_body->ApplyLinearImpulseToCenter(b2Vec2(100.f, 0.f), true);
+		break;
+	}
+
+
 
 }
 
