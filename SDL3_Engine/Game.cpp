@@ -5,9 +5,12 @@ Game::Game(const char title[], const int width, const int height) {
 	this->width = width;
 	this->height = height;
 	
-	bisrunning = true;
+	
 
-	InitSDL(title);
+	if (InitSDL(title))
+		bisrunning = true;
+	else
+		bisrunning = false;
 
 	InitBox2d();
 
@@ -53,16 +56,19 @@ bool Game::InitSDL(const char title[]) {
 	}
 	
 	
+	
 	return true;
 }
 
 void Game::InitBox2d() {
 
-	gravity.Set(0.f, -10.f);
+	gravity.Set(0.f, -gravity_force);
 
 	world = new b2World(gravity);
 
-
+	
+	player.Load("images/player.png", renderer, world);
+	player.Set(10, 10, 16, 16, 4);
 
 }
 
@@ -78,19 +84,15 @@ void Game::HandleEvents()
 			bisrunning = false;
 			
 		}
+		player.HandleEvents();
 
-		//handle key events
-		switch (event.key.keysym.sym) {
-		default:
-			break;
-		}
 	}
 
 }
 
 void Game::Update()
 {
-
+	player.Update();
 
 	world->Step(timeStep, velocityIterations, positionIterations);
 }
@@ -102,8 +104,7 @@ void Game::Render()
 	//clears what is on the screen
 	SDL_RenderClear(renderer);
 	//adds stuff to the screen
-
-
+	player.Render();
 
 	//redraws the screen
 	SDL_RenderPresent(renderer);
@@ -111,5 +112,7 @@ void Game::Render()
 
 void Game::Close()
 {
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
 	SDL_Quit();
 }

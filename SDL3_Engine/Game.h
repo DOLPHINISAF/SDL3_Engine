@@ -1,9 +1,10 @@
 #pragma once
-#include "Player.h"
+#include <box2d.h>
 #include <iostream>
 #include <SDL.h>
 #include <string>
-#include <box2d.h>
+#include "Player.h"
+
 class Game
 {
 public:
@@ -33,6 +34,8 @@ private:
 	int width;
 	int height;
 
+	float gravity_force = 9.8f;
+
 	//SDL objects
 
 	SDL_Window* window = nullptr;
@@ -48,10 +51,12 @@ private:
 
 	b2Vec2 gravity;
 
+
 	b2World* world;
 
 	//world objects
 
 	Player player;
+
 };
 

@@ -1,9 +1,11 @@
 #include "game.h"
 
+Game* game = nullptr;
 
-Game* game = new Game("Joculet", 1280, 720);
 
 int main(int argc, char* argv[]) {
+
+	game = new Game("Joculet", 1280, 720);
 
 	while (game->getIsRunning()) {
 		game->HandleEvents();
@@ -11,7 +13,7 @@ int main(int argc, char* argv[]) {
 		game->Render();
 		
 	}
-
+	game->Close();
 
 	return 0;
 }
