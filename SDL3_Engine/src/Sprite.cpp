@@ -1,7 +1,8 @@
 #include "Sprite.h"
 
-bool Sprite::Load(std::string path, SDL_Renderer* renderer, b2World* world)
+bool Sprite::Load(std::string path, SDL_Renderer* renderer, b2World* world, bool ISLOGGING = false)
 {
+	islogging = ISLOGGING;
 	this->srenderer = renderer;
 	this->world = world;
 
@@ -21,17 +22,15 @@ bool Sprite::Load(std::string path, SDL_Renderer* renderer, b2World* world)
 	}
 
 	return true;
-
-	
 }
 
-void Sprite::Set(int x, int y, int height, int width, int scale = 1)
+void Sprite::Set(int x, int y, int height, int width, int scaleX = 1, int scaleY = 1)
 {
 	//we set the size of the sprite sprite
 	sprite_rect.x = x;
 	sprite_rect.y = y;
-	sprite_rect.w = width * scale;
-	sprite_rect.h = height * scale;
+	sprite_rect.w = width * scaleX;
+	sprite_rect.h = height * scaleY;
 
 
 	//temporary objects
@@ -40,7 +39,7 @@ void Sprite::Set(int x, int y, int height, int width, int scale = 1)
 
 	sprite_body_def.fixedRotation = true;
 	sprite_body_def.type = b2_staticBody;
-	sprite_body_def.position.Set(float(sprite_rect.x), float(-sprite_rect.y));
+	sprite_body_def.position.Set(float(sprite_rect.x + sprite_rect.w / 2), float(-sprite_rect.y + sprite_rect.h / 2));
 
 	//creates our body
 	sprite_body = world->CreateBody(&sprite_body_def);

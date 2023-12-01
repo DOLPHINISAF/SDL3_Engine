@@ -9,17 +9,22 @@ class Sprite
 {
 public:
 
-	bool Load(std::string path, SDL_Renderer* renderer, b2World* world);
+	bool Load(std::string path, SDL_Renderer* renderer, b2World* world, bool ISLOGGING);
 
-	void Set(int x, int y, int height, int width, int scale);
+	void Set(int x, int y, int height, int width, int scaleX, int scaleY);
 	
 	void Render();
 
 	void Close();
 
-	void LOG(std::string text) { std::cout << text << '\n'; }
+	
 
 private:
+
+
+	void LOG(std::string text) { if(islogging)std::cout << text << '\n'; }
+
+	bool islogging;
 
 	//SDL2 objects
 	SDL_Rect sprite_rect;
